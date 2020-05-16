@@ -1,11 +1,5 @@
 #include "common.h"
 
-// -----------------------------------
-context_t* init_lookup();
-// -----------------------------------
-
-context_t context;
-
 typedef struct event_values_t {
     int event_value[EVENT_COUNT];
 } event_values_t;

@@ -1,8 +1,6 @@
 /* for loop specific implementation */
 #include "for_loop.h"
 
-context_t context;
-
 void for_loop_init(context_t* context) {
     return;
 }

@@ -3,6 +3,20 @@
 
 pair_t* first_element_for_sorted[STATE_COUNT+EVENT_COUNT];
 
+// the lookup + for-loop approach will use a lookup table to jump to a
+// group of pre-sorted table entries and run through this group using
+// a for-loop. If there are more states than events, the list will be grouped
+// by states, otherwise by events (to maximize the number of groups (1 lookup)
+// and shrink the for-loop.
+
+// Two different programming approaches have been used here:
+// 1) For pre-sorting the transition table, each sort step checks wether we
+//    sort by events or by states and sorts accordingly.
+// 2) For finding an element, two separate functions are used. One for event
+//    and one for state sorted tables (faster if we need no extra comparisons)
+// An approach similar to 2) could also have been used for 1). but I was wanted
+// to try both ways, so its inconsistent now.
+
 // ----------------------------------------------------------------------------
 // - LIST SORTING                                                             -
 // ----------------------------------------------------------------------------
