@@ -10,11 +10,15 @@ pair_t* first_element_for_sorted[STATE_COUNT+EVENT_COUNT];
 // and shrink the for-loop.
 
 // Two different programming approaches have been used here:
-// 1) For pre-sorting the transition table, each sort step checks wether we
-//    sort by events or by states and sorts accordingly.
-// 2) For finding an element, two separate functions are used. One for event
-//    and one for state sorted tables (faster if we need no extra comparisons)
-// An approach similar to 2) could also have been used for 1). but I was wanted
+// 1) pre-sorting and table entry searches are implemented in two versions
+//    each, one for working with state and for working with event sorted
+//    tables. Depending on what we are currently using, a function pointer is
+//    set to either of the implementations. This way, the functions do not have
+//    to check what we have sorted by.
+// 2) For finding the transition table, each sort step checks wether we
+//    sort by events or by states and sorts accordingly. This is a lot of extra
+//    comparisons.
+// An approach similar to 1) could also have been used for 2). But I was wanted
 // to try both ways, so its inconsistent now.
 
 // ----------------------------------------------------------------------------
@@ -102,9 +106,7 @@ int search_pair_state(context_t* context) {
 int search_pair_event(context_t* context) {
     int counter = 0;
     pair_t* pair = first_element_for_sorted[context->event_search];
-    //DEBUG("    search_pair_event\n");
     while (pair->event == context->event_search) {
-        //DEBUG("      run %d\n", counter++);
         if (pair->state == context->state_search) {
             return pair->value;
         }
